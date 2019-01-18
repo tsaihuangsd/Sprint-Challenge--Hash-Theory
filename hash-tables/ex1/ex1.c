@@ -12,7 +12,8 @@ Answer *get_indices_of_item_weights(int *weights, int length, int limit)
     difference = limit - weights[i];
     // for (int j=i+1; j<length; j++){
     //   if (weights[j] == difference){
-        hash_table_insert(ht, difference, i);
+    printf("current weight: %d, difference: %d, index: %d\n", weights[i], difference, i);
+    hash_table_insert(ht, difference, i);
       // }
     // }
   }
