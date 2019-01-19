@@ -84,9 +84,12 @@ void hash_table_remove(HashTable *ht, int key)
 int hash_table_retrieve(HashTable *ht, int key)
 {
   unsigned int index = hash(key, ht->capacity);
+  // printf("Hash: %d\n", index);
+
   LinkedPair *current_pair = ht->storage[index];
 
   while (current_pair != NULL) {
+    // printf("Current pair key: %d, key: %d", current_pair->key, key);
     if (current_pair->key == key) {
       return current_pair->value;
     }

@@ -8,8 +8,18 @@ char **reconstruct_trip(Ticket **tickets, int length)
 {
   HashTable *ht = create_hash_table(16);
   char **route = malloc(length * sizeof(char *));
-
-  // YOUR CODE HERE
+  //build hash table with keys and values as sources and destinations of tickets
+  for (int i=0; i<length; i++){
+    hash_table_insert(ht, tickets[i]->source, tickets[i]->destination);
+  }
+  // char **output_array;
+  //loop through the tickets array. For each ticket, save the source and destination as key-value pair in hash table.
+  char *current_city = hash_table_retrieve(ht, "NONE");
+  for (int i=0; i<length; i++){
+    printf("current city: %s\n", current_city);
+    route[i] = current_city;
+    current_city = hash_table_retrieve(ht, current_city);
+  }
 
   return route;
 }
