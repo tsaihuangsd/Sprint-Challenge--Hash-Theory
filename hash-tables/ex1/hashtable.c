@@ -43,13 +43,17 @@ void hash_table_insert(HashTable *ht, int key, int value)
   LinkedPair *last_pair;
 
   while (current_pair != NULL && current_pair->key != key) {
+    // printf("current key: %d, value: %d\n", current_pair->key, current_pair->value);
     last_pair = current_pair;
     current_pair = last_pair->next;
   }
 
   if (current_pair != NULL) {
-    current_pair->value = value;
-  } else {
+    // printf("here\n");
+    current_pair->value = value;  //overwrites the value corresponding to the existing matching key with new value
+  } 
+  else {
+
     LinkedPair *new_pair = create_pair(key, value);
     new_pair->next = ht->storage[index];
     ht->storage[index] = new_pair;
