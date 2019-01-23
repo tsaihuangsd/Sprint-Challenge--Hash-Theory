@@ -15,6 +15,11 @@ LinkedPair *create_pair(int key, int value)
 
 // djb2 hash function
 unsigned int hash(unsigned int x, int max) {
+  // unsigned long hash = 5381;
+  // hash = x*hash;
+
+  // x= x*5381;
+
   x = ((x >> 16) ^ x) * 0x45d9f3b;
   x = ((x >> 16) ^ x) * 0x45d9f3b;
   x = (x >> 16) ^ x;
@@ -48,16 +53,19 @@ void hash_table_insert(HashTable *ht, int key, int value)
     current_pair = last_pair->next;
   }
 
+
+  // if a LinkedPair is found with the key of interest, overwrite the value of the LinkedPair with the value of interest
   if (current_pair != NULL) {
     // printf("here\n");
     current_pair->value = value;  //overwrites the value corresponding to the existing matching key with new value
   } 
   else {
-
     LinkedPair *new_pair = create_pair(key, value);
     new_pair->next = ht->storage[index];
     ht->storage[index] = new_pair;
+    // printf("hash_index: %d, key: %d, value: %d\n", index, ht->storage[index]->key, ht->storage[index]->value);
   }
+  
 }
 
 void hash_table_remove(HashTable *ht, int key)
@@ -88,12 +96,12 @@ void hash_table_remove(HashTable *ht, int key)
 int hash_table_retrieve(HashTable *ht, int key)
 {
   unsigned int index = hash(key, ht->capacity);
-  // printf("Hash: %d\n", index);
+  // printf("Hash_index: %d\n", index);
 
   LinkedPair *current_pair = ht->storage[index];
 
   while (current_pair != NULL) {
-    // printf("Current pair key: %d, key: %d", current_pair->key, key);
+    // printf("Checking current pair - key: %d, difference: %d", current_pair->key, key);
     if (current_pair->key == key) {
       return current_pair->value;
     }
